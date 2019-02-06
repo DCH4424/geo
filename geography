@@ -1,0 +1,433 @@
+#include <iostream>
+using namespace std;
+struct geografie {
+	char oras[200], tara[200];
+	int numberOfPeople, longVest, longEst, latNord, latSud, nrOras, cPeople;
+}a[100], p;
+struct geo {
+	int latN, latS, longE, longV, nrPeople, cPeople;
+}b[200];
+
+int main() {
+	char longType[20], latType[20], tara[20];
+	int i, n, maxLatNord, max, j, minLongEst, minLongVest, zeroM, minLatSud, minLatNord, aux,
+		maxNrLocuitori = 0, maxNrOrase, minNrLocuitori;
+	cout << "Cate orase vor fi prezente in comapatie : ";
+
+	cin >> n;
+	for (i = 1; i <= n; i++)
+	{
+		cout << "Tara : ";
+		cin >> a[i].tara;
+		cout << "Orasul : ";
+		cin >> a[i].oras;
+		cout << "Nr de locuitori: ";
+		cin >> a[i].numberOfPeople;
+		cout << "Latitudinea NORD sau SUD : ";
+		cin >> latType;
+		if (strcmp(latType, "NORD") == 0)
+		{
+			cout << "Latitudinea nordica : ";
+			cin >> a[i].latNord;
+		}
+		else if (strcmp(latType, "SUD") == 0)
+		{
+			cout << "Latitudinea sudica : ";
+			cin >> a[i].latSud;
+		}
+		cout << "Longitudinea EST sau VEST : ";
+		cin >> longType;
+		if (strcmp(longType, "EST") == 0)
+		{
+			cout << "Longitudinea estica: ";
+			cin >> a[i].longEst;
+
+		}
+		else if (strcmp(longType, "VEST") == 0)
+		{
+			cout << "Longitudinea vestica : ";
+			cin >> a[i].longVest;
+
+		}
+
+	}
+	cout << "=========================================" << endl;
+	cout << "Cel mai nordic oras este : " << endl;
+	maxLatNord = a[1].latNord;
+	for (i = 1; i <= n; i++)
+	{
+		if (maxLatNord < a[i].latNord)
+		{
+			maxLatNord = a[i].latNord;
+
+		}
+
+	}
+	cout << "=========================================" << endl;
+	for (j = 1; j <= n; j++)
+	{
+		if (a[j].latNord == maxLatNord)
+		{
+			cout << a[j].oras << endl;
+		}
+	}
+	minLatNord = 180;
+	minLatSud = 180;
+	cout << "Orasul cel mai apropiat de ecuator : ";
+	for ( i = 1; i <=n; i++)
+	{
+		if (a[i].latNord!=0)
+		{
+			if (a[i].latNord < minLatNord)
+			{
+				minLatNord = a[i].latNord;
+			}
+		}
+	}
+	for (i = 1; i <= n; i++)
+	{
+		if (a[i].latSud != 0)
+		{
+			if (a[i].latSud < minLatSud)
+			{
+				minLatSud = a[i].latSud;
+			}
+		}
+	}
+	if (minLatNord<minLatSud)
+	{
+		for ( i = 1; i <=n; i++)
+		{
+			if (a[i].latNord == minLatNord)
+			{
+				cout << a[i].oras << endl;
+			}
+		}
+	}
+	else if (minLatNord > minLatSud)
+	{
+		for ( i = 1; i <= n; i++)
+		{
+			if (a[i].latSud == minLatSud)
+			{
+				cout << a[i].oras << endl;
+			}
+		}
+	}
+	cout << "=========================================" << endl;
+	minLongEst = 180;
+	minLongVest = 180;
+	cout << "Orasul cel mai apropiat de meridianul de 0 grade : ";
+	for (i = 1; i <= n; i++)
+	{
+		if (a[i].longVest!= 0)
+		{
+			if (a[i].longVest < minLongVest)
+			{
+				minLongVest = a[i].longVest;
+			}
+		}
+	}
+	for (i = 1; i <= n; i++)
+	{
+		if (a[i].longEst != 0)
+		{
+			if (a[i].longEst < minLongEst)
+			{
+				minLongEst = a[i].longEst;
+			}
+		}
+	}
+	if (minLongEst < minLongVest)
+	{
+		for (i = 1; i <= n; i++)
+		{
+			if (a[i].longEst == minLongEst)
+			{
+				cout << a[i].oras << endl;
+			}
+		}
+	}
+	else if (minLongEst > minLongVest)
+	{
+		for (i = 1; i <= n; i++)
+		{
+			if (a[i].longVest == minLongVest)
+			{
+				cout << a[i].oras << endl;
+			}
+		}
+	}
+	cout << "=========================================" << endl;
+	cout << "Tara carei apartine cel mai nordic oras este : ";
+	for (i = 1; i <= n; i++)
+	{
+		if (a[i].latNord == maxLatNord)
+		{
+			cout << a[i].tara << endl;
+		}
+	}
+	cout << "=========================================" << endl;
+	cout << "Tara care apartine orasul cel mai apropiat de ecuator : ";
+	for (i = 1; i <= n; i++)
+	{
+		if (minLatSud > minLatNord)
+		{
+			for (i = 1; i <= n; i++)
+			{
+				if (a[i].latNord == minLatNord)
+				{
+					cout << a[i].oras << endl;
+				}
+			}
+		}
+		else if (minLatNord > minLatSud)
+		{
+			for (i = 1; i <= n; i++)
+			{
+				if (a[i].latSud == minLatSud) {
+					cout << a[i].tara << endl;
+				}
+
+			}
+		}
+	}
+	cout << "=========================================" << endl;
+	cout << "Tara care apartine orasul cel mai apropiat de meridianul de 0 grade : ";
+	for (i = 1; i <= n; i++)
+	{
+		if (minLongEst > minLongVest)
+		{
+			for (i = 1; i <= n; i++)
+			{
+				if (a[i].longVest == minLongVest)
+				{
+					cout << a[i].oras << endl;
+				}
+			}
+		}
+		else if (minLongVest > minLongEst)
+		{
+			for (i = 1; i <= n; i++)
+			{
+				if (a[i].longEst == minLongEst) {
+					cout << a[i].tara << endl;
+				}
+
+			}
+		}
+	}
+	cout << "Orasele de la nord la sud : " << endl;
+	for ( i = 1; i <= n; i++)
+	{
+		b[i].latN = a[i].latNord;
+	}
+	for (i = 1; i <= n; i++)
+	{
+		b[i].latS = a[i].latSud;
+	}
+	for ( i = 1; i <=0; i++)
+	{
+		for ( j = i+1; j <= n; j++)
+		{
+			if (b[i].latN <b[j].latN)
+			{
+				aux = b[i].latN;
+				b[i].latN = b[j].latN;
+				b[j].latN = aux;
+			}
+		}
+
+	}
+	for (i = 1; i <= 0; i++)
+	{
+		for (j = i + 1; j <= n; j++)
+		{
+			if (b[i].latS > b[j].latS)
+			{
+				aux = b[i].latS;
+				b[i].latS = b[j].latS;
+				b[j].latS = aux;
+			}
+		}
+
+	}
+	for (i = 1; i <= n; i++)
+	{
+		if (b[i].latN != 0)
+		{
+			for ( j = 1; j <=n; j++)
+			{
+				if (b[i].latN == a[j].latNord)
+				{
+					cout << a[j].oras << endl;
+				}
+			}
+		}
+		
+	}
+	
+	for (i = 1; i <= n; i++)
+	{
+		if (b[i].latS != 0)
+		{
+
+			for (j = 1; j <= n; j++)
+			{
+				if (b[i].latS == a[j].latSud)
+				{
+					cout << a[j].oras << endl;
+				}
+
+			}
+		}
+
+	}
+	cout << "Orasele de la est la vest : " << endl;
+	for (i = 1; i <= n; i++)
+	{
+		b[i].longE = a[i].longEst;
+	}
+	for (i = 1; i <= n; i++)
+	{
+		b[i].longV = a[i].longVest;
+	}
+	for (i = 1; i <= 0; i++)
+	{
+		for (j = i + 1; j <= n; j++)
+		{
+			if (b[i].longE < b[j].longE)
+			{
+				aux = b[i].longE;
+				b[i].longE = b[j].longE;
+				b[j].longE = aux;
+			}
+		}
+
+	}
+	for (i = 1; i <= 0; i++)
+	{
+		for (j = i + 1; j <= n; j++)
+		{
+			if (b[i].longV > b[j].longV)
+			{
+				aux = b[i].longV;
+				b[i].longV = b[j].longV;
+				b[j].longV = aux;
+			}
+		}
+
+	}
+	for (i = 1; i <= n; i++)
+	{
+		if (b[i].longE != 0)
+		{
+			for (j = 1; j <= n; j++)
+			{
+				if (b[i].longE == a[j].longEst)
+				{
+					cout << a[j].oras << endl;
+				}
+			}
+		}
+
+	}
+
+	for (i = 1; i <= n; i++)
+	{
+		if (b[i].longV != 0)
+		{
+
+			for (j = 1; j <= n; j++)
+			{
+				if (b[i].longV == a[j].longVest)
+				{
+					cout << a[j].oras << endl;
+				}
+
+			}
+		}
+
+	}
+
+	cout << "Orasele in descrestere dupa numarul de locuitori : " << endl;
+	for ( i = 1; i <=n; i++)
+	{
+		b[i].nrPeople = a[i].numberOfPeople;
+	}
+	for ( i = 1; i <= n; i++)
+	{
+		for (j = 1; j <=n ; j++)
+		{
+			if (b[i].nrPeople > b[j].nrPeople )
+			{
+				aux = b[i].nrPeople;
+				b[i].nrPeople = b[j].nrPeople;
+				b[j].nrPeople = aux;
+			}
+		}
+	}
+	for ( i = 1; i <= n ; i++)
+	{
+		for ( j = 1; j <=n; j++)
+		{
+			if (b[i].nrPeople == a[j].numberOfPeople)
+			{
+				cout << a[j].oras << endl;
+			}
+		}
+	}
+	cout << "Nr de locuitori ce apartine oraselor fiecarei tari : " << endl;
+	cin >> tara;
+	for (i = 1; i <= n; i++)
+	{
+		b[i].nrPeople = a[i].numberOfPeople;
+	}
+	
+	for ( i = 1; i <=n; i++)
+	{
+		
+		if (strcmp(a[i].tara,tara) == 0){
+			maxNrLocuitori = maxNrLocuitori + a[i].numberOfPeople;
+		}
+		
+	}
+	cout << "Tara : ";
+	cout << maxNrLocuitori << endl;
+	cout << "";
+	minNrLocuitori = a[1].numberOfPeople;
+	maxNrLocuitori = a[1].numberOfPeople;
+	for ( i = 1; i <=n ; i++)
+	{
+		if (a[i].numberOfPeople > maxNrLocuitori)
+		{
+			maxNrLocuitori = a[i].numberOfPeople; 
+		}
+	}
+	for (i = 1; i <= n; i++)
+	{
+		if (a[i].numberOfPeople < minNrLocuitori)
+		{
+			minNrLocuitori = a[i].numberOfPeople;
+		}
+	}
+	for ( i = 1; i <= n; i++)
+	{
+		if (a[i].numberOfPeople == maxNrLocuitori)
+		{
+			cout << "Orasul carui apartine cel mai mare numar de locuitori : " << a[i].oras << endl;
+			cout << "Tara carei apartine orasul cu cel mai mare numar de locuitori : " << a[i].tara << endl;	
+		}
+	}
+	for (i = 1; i <= n; i++)
+	{
+		if (a[i].numberOfPeople == minNrLocuitori)
+		{
+			cout << "Orasul carui apartine cel mai mi numar de locuitori : " << a[i].oras << endl;
+			cout << "Tara carei apartine orasul cu cel mai mic numar de locuitori : " << a[i].tara << endl;
+		}
+	}
+	
+
+}
+
