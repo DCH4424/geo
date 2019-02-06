@@ -1,0 +1,175 @@
+#include <iostream>
+#include <string>
+using namespace std;
+struct biblioteca {
+	char numePre[200], denumireaCartii[200], Limba[200], tematica[200], editura[200];
+	int anul, nrOfPages, nrExemplare;
+	float price, midPrice;
+}a[2000], p;
+struct editura {
+	int nrDeTitluri, maxExemplare;
+}b[1222];
+int main() {
+	int i, j, n, editYear, k = 0, maxNrDeTitluri, maxNrExemplare;
+	char tematica[200], numePrenume[200], language[200];
+	char editura[200];
+	float pret = 0, min;
+	cout << "Numarul de carti : ";
+	cin >> n;
+	for ( i = 1; i <=n; i++)
+	{
+		cout << "Cartea nr " << i << " : " << endl;
+		cout << "Denumirea cartii : ";
+		cin >> a[i].denumireaCartii;
+		cout << "Numele si prenumele autorului : ";
+		cin >> a[i].numePre;
+		cout << "Limba in care este scrisa cartea : ";
+		cin >> a[i].Limba;
+		cout << "Anul de editie : ";
+		cin >> a[i].anul;
+		cout << "Tematica cartii : ";
+		cin >> a[i].tematica;
+		cout << "Numarul de pagini : ";
+		cin >> a[i].nrOfPages;
+		cout << "Pretul cartii : ";
+		cin >> a[i].price;
+		cout << "Editura : ";
+		cin >> a[i].editura;
+		cout << "Numarul de exemplare : ";
+		cin >> a[i].nrExemplare;
+	}
+	cout << "===============================================" << endl;
+	cout << endl;
+	cout << "Lista cartilor ce au acelasi autor : " << endl;
+	cout << "Numele si prenumele autorului(NumePrenume) : ";
+	cin >> numePrenume;
+	
+	for ( i = 1; i <=n+1; i++)
+	{
+		if (strcmp(a[i].numePre,numePrenume) == 0)
+		{
+			cout << a[i].denumireaCartii<<endl;
+		}
+	}
+	cout << "===============================================" << endl;
+	cout << "Lista referitoare la o anumita tematica" << endl;
+	cout << "Tematica: ";
+	cin >> tematica;
+	for ( i = 1; i <=n; i++)
+	{
+		if (strcmp(a[i].tematica,tematica) == 0)
+		{
+			cout << a[i].denumireaCartii << endl;
+		}
+	}
+	cout << "===============================================" << endl;
+	cout << "Lista cartilor afisate intr-o anumita limba" << endl;
+	cout << "Limba : ";
+	cin >> language;
+	for ( i = 1; i <=n; i++)
+	{
+		if (strcmp(a[i].Limba,language)==0)
+		{
+			cout << a[i].denumireaCartii << endl;
+		}
+	}
+	cout << "===============================================" << endl;
+	cout << "Lista cartilor editate in acelasi an : " << endl;
+	cout << "Anul : ";
+	cin >> editYear;
+	for ( i = 1; i <=n; i++)
+	{
+		if (a[i].anul == editYear)
+		{
+			cout << a[i].denumireaCartii << endl;
+		}
+	}
+	cout << "===============================================" << endl;
+	cout << "Pretul mediu pentru cartile unei edituri : " << endl;
+	cout << "Editura : ";
+	cin >> editura;
+	for ( i = 1; i <= n; i++)
+	{
+		if (strcmp(a[i].editura, editura) == 0)
+		{
+			pret = pret + a[i].price;
+			++k;
+		}
+	}
+	min = pret / k;
+	cout << min << endl;
+	cout << "===============================================" << endl;
+	cout << "Editura cu cel mai mare numar de titluri : " << endl;
+	for ( i = 1; i <=n; i++)
+	{
+		for ( j = 1; j <=n; j++)
+		{
+			if (strcmp(a[i].editura,a[j].editura)==0)
+			{
+				b[i].nrDeTitluri = b[i].nrDeTitluri + 1;
+			}
+		}
+
+	}
+	maxNrDeTitluri = b[i].nrDeTitluri;
+	for ( i = 1; i <=n; i++)
+	{
+		if (b[i].nrDeTitluri > maxNrDeTitluri)
+		{
+			maxNrDeTitluri = b[i].nrDeTitluri;
+		}
+	}
+	for ( i = 1; i <=n; i++)
+	{
+		if (b[i].nrDeTitluri == maxNrDeTitluri)
+		{
+			cout << a[i].editura << endl;
+			break;
+		}
+	}
+	cout << "===============================================" << endl;
+	
+	cout << "Anul in care au fost editate cartile cu cel mai mare numar de exemplare : " << endl;
+	maxNrExemplare = a[1].nrExemplare;
+	for ( i = 1; i <=n; i++)
+	{
+		if (a[i].anul == a[i++].anul)
+		{
+			if (a[i].nrExemplare >maxNrExemplare)
+			{
+				maxNrExemplare = a[i].nrExemplare;
+			}
+		}
+	}
+	for ( i = 1; i <=n; i++)
+	{
+		if (a[i].nrExemplare == maxNrExemplare)
+		{
+			cout << a[i].anul << endl;
+		}
+	}
+	cout << "===============================================" << endl;
+	cout << "Aranjarea in ordine alfabetica dupa tematica:" << endl;
+	for(i = 1; i <= n; i++)
+	{
+		for ( j = i; j <=n; j++)
+		{
+			if (strcmp(a[i].tematica,a[j].tematica)==0)
+			{
+				if (strcmp(a[i].denumireaCartii,a[j].denumireaCartii)>0)
+				{
+					p = a[i];
+					a[i] = a[j];
+					a[j] = p;
+				}
+			}
+
+		}
+	}
+	for ( i = 1; i <= n; i++)
+	{
+		cout << a[i].tematica;
+		cout << a[i].denumireaCartii << endl;
+	}
+
+}
