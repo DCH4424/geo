@@ -1,0 +1,142 @@
+#include <iostream>
+using namespace std;
+struct elevi {
+	char nume[20], prenume[20];
+	int nota1, nota2, nota3;
+	float medie;
+}a[200];
+int main() {
+	int n, i, j, max, k = 0, maxmedia;
+	elevi aux;
+	cout << "Numarul de elevvi : ";
+	cin >> n;
+	for ( i = 1; i <= n; i++)
+	{
+		cout << "Elev nr. " << i << endl;
+		cout << "Numele : ";
+		cin >> a[i].nume;
+		cout << "Prenumele : ";
+		cin >> a[i].prenume;
+		cout << "Nota la 1 obiect : ";
+		cin >> a[i].nota1;
+		cout << "Nota la 2 obiect : ";
+		cin >> a[i].nota2;
+		cout << "Nota la 3 obiect : ";
+		cin >> a[i].nota3;
+	}
+	cout << "==============================================================" << endl;
+	cout << "Elevul cu cea mai mare nota la 1 obiect : " << endl;
+	max = a[1].nota1;
+	for ( i = 1; i <=n; i++)
+	{
+		if (a[i].nota1 >= max)
+		{
+			max = a[i].nota1;
+		}
+	}
+	for ( i = 1; i <=n; i++)
+	{
+		if (a[i].nota1 == max)
+		{
+			cout << a[i].nume << " " << a[i].prenume << endl;
+		}
+	}
+	cout << "==============================================================" << endl;
+	
+	for ( i = 1; i <=n; i++)
+	{
+		if (a[i].nota1 < 5 || a[i].nota2 < 5 || a[i].nota3 < 5)
+		{
+			k = k + 1;
+		}
+		
+	}
+	for ( i = 1; i <= n; i++)
+	{
+		if (a[i].nota1 < 5 || a[i].nota2 < 5 || a[i].nota3 < 5)
+		{
+
+
+			if (k == 1)
+			{
+				cout << "Elevul care a primit nota insuficienta la proba este : " << a[i].nume << a[i].prenume << endl;
+			}
+
+			else if (k > 1)
+			{
+				cout << "Elevii care au primit note insuficiente la probe sunt : " << a[i].nume << a[i].prenume << endl;
+			}
+
+		}
+	}
+	for ( i = 1; i <=1; i++)
+	{
+		if (k == 0)
+		{
+			cout << "Nu sunt elevi ca au primit note insuficiente la probe." << endl;
+		}
+	}
+	cout << "==============================================================" << endl;
+	for ( i = 1; i <=n; i++)
+	{
+		a[i].medie = (a[i].nota1 + a[i].nota2 + a[i].nota3) / 3;
+	}
+	maxmedia = a[1].medie;
+	for ( i = 1; i <=n; i++)
+	{
+		if (a[i].medie > maxmedia)
+			maxmedia = a[i].medie;
+	}
+	for ( i = 1; i <=n; i++)
+	{
+		if (a[i].medie == maxmedia)
+		{
+			cout << "Elevul cu cea mai mare medie este : " << endl << a[i].nume << " " << a[i].prenume << endl;
+		}
+	}
+	cout << "==============================================================" << endl;
+	for ( i = 1; i <=n; i++)
+	{
+		if (a[i].nota1 == a[i].nota2&& a[i].nota2 == a[i].nota3)
+		{
+			cout << "Elevul care a luat aceleasi note la obiecte este : " << a[i].nume << " " << a[i].prenume << endl;
+		}
+	}
+	cout << "==============================================================" << endl;
+	cout << "Elevii ordonati in ordine alfabetica : " << endl;
+	for ( i = 1; i <=n; i++)
+	{
+		for (j = i + 1; j <= n; j++)
+		{
+
+
+			if (strcmp(a[i].nume, a[j].nume) > 0)
+			{
+				aux = a[i];
+				a[i] = a[j];
+				a[j] = aux;
+			}
+		}
+		
+	}
+	for ( i = 1; i <= n; i++)
+	{
+		cout << a[i].nume << " " << a[i].prenume << endl;
+	}
+	cout << "==============================================================" << endl;
+	cout << "Lista elevilor ordonati descrescator dupa medie : " << endl;
+	for ( i = 1; i <= n; i++)
+	{
+		if (a[i].medie < a[i+1].medie)
+		{
+			int aux = a[i].medie;
+			a[i].medie = a[i + 1].medie;
+			a[i + 1].medie = aux;
+		}
+	}
+	for ( i = 1; i <=n; i++)
+	{
+		cout << a[i].nume << " " << a[i].prenume << " : " << a[i].medie << endl;
+	}
+	cout << "==============================================================" << endl;
+}
